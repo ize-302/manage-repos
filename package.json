@@ -1,0 +1,20 @@
+{
+  "name": "manage-repos",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^1.5.0",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "firebase": "^8.3.2",
+    "framer-motion": "^4",
+    "next": "10.1.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  }
+}
