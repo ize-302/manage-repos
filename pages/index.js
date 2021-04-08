@@ -11,7 +11,7 @@ export default function Home() {
     var provider = new firebase.auth.GithubAuthProvider();
     provider.addScope("repo");
     auth
-      .signInWithPopup(provider)
+      .signInWithRedirect(provider)
       .then(function (result) {
         // This gives you a GitHub Access Token.
         var token = result.credential.accessToken;
