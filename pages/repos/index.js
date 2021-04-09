@@ -23,4 +23,6 @@ const Repos = () => {
   return <Box>ss</Box>;
 };
 
+Repos.layout = "dashboard";
+
 export default Repos;
