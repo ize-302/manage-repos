@@ -3,38 +3,11 @@ import { VStack } from "@chakra-ui/layout";
 import { HStack } from "@chakra-ui/layout";
 import { Box, Container, Text, Flex, Heading } from "@chakra-ui/layout";
 import { Github } from "../components/Icons";
-import { auth } from "../config/firebase";
-import firebase from "firebase/app";
 
 export default function Home() {
   const handleSignin = () => {
-    var provider = new firebase.auth.GithubAuthProvider();
-    provider.addScope("repo");
-    auth
-      .signInWithRedirect(provider)
-      .then(function (result) {
-        // This gives you a GitHub Access Token.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-      })
-      .catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        if (errorCode === "auth/account-exists-with-different-credential") {
-          alert("You have signed up with a different provider for that email.");
-          // Handle linking here if your app allows it.
-        } else {
-          console.error(error);
-        }
-      });
+    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`;
   };
-
   return (
     <Box
       display="flex"
@@ -61,6 +34,7 @@ export default function Home() {
             >
               Manage repos!
             </Heading>
+
             <Button
               background="brand.primary"
               color="white"
