@@ -15,7 +15,7 @@ const Repos = () => {
       router.query.accessToken
     );
     // user details
-    axios.get(`/user?accessToken=${token}`).then((response) => {
+    axios.get(`/api/user?accessToken=${token}`).then((response) => {
       console.log(response.data);
     });
   });
