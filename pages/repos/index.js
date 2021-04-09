@@ -17,6 +17,7 @@ const Repos = () => {
     // user details
     axios.get(`/api/getAuthUser?accessToken=${token}`).then((response) => {
       console.log(response.data);
+      return;
     });
   });
   return <Box>ss</Box>;
