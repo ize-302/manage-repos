@@ -9,9 +9,10 @@ const Home = () => {
   const { user } = React.useContext(UserContext);
   const router = useRouter();
   const [repos, setrepos] = React.useState([]);
+  const [totalCount, settotalCount] = React.useState("0");
   const [loading, setloading] = React.useState(false);
 
-  React.useEffect(function mount() {
+  React.useEffect(() => {
     setloading(true);
     const token = window.localStorage.getItem(
       "accessToken",
@@ -24,7 +25,9 @@ const Home = () => {
       .get(`/api/getRepos?accessToken=${token}&page=${page}`)
       .then((response) => {
         setloading(false);
-        setrepos(response.data);
+        const { total_count, repositories } = response.data;
+        setrepos(repositories);
+        settotalCount(total_count);
       })
       .catch((err) => {
         setloading(false);
@@ -40,8 +43,7 @@ const Home = () => {
           <Heading fontSize={[18, 18, 24]}>Hi {user.login},</Heading>
         </HStack>
         <Text>
-          <b>{loading ? "0" : user.total_private_repos + user.public_repos}</b>{" "}
-          Repositories
+          <b>{totalCount}</b> Repositories
         </Text>
       </Flex>
 

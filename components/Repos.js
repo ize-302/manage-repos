@@ -11,7 +11,9 @@ import {
   HStack,
   Link,
   Skeleton,
+  Tag,
 } from "@chakra-ui/react";
+import { LockIcon } from "@chakra-ui/icons";
 
 const Repos = ({ repos, loading }) => {
   return (
@@ -63,24 +65,21 @@ const Repos = ({ repos, loading }) => {
             >
               <Divider marginBottom={2} />
               <HStack paddingX={3} justifyContent="space-between">
-                <>
-                  {!repo.fork ? (
-                    <Button rounded={50} size="xs" _hover={{}}>
-                      source
-                    </Button>
-                  ) : (
-                    <Button rounded={50} size="xs" _hover={{}}>
+                <HStack spacing={3}>
+                  {repo.fork && (
+                    <Tag size="sm" colorScheme="blue" borderRadius="full">
                       forked
-                    </Button>
+                    </Tag>
                   )}
-                </>
-                <>
+
                   {repo.private && (
-                    <Button rounded={50} size="xs" _hover={{}}>
-                      Private
-                    </Button>
+                    <HStack spacing={1}>
+                      <LockIcon w={3} height={3} />
+                      <Text fontSize="12">Private</Text>
+                    </HStack>
                   )}
-                </>
+                </HStack>
+
                 <Link
                   href={repo.html_url}
                   fontSize={14}
