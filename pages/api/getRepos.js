@@ -4,7 +4,7 @@ export default (req, res) => {
   const { accessToken, page } = req.query;
   axios
     .get(
-      `https://api.github.com/user/repos?sort=pushed&per_page=100&page=${page}`,
+      `https://api.github.com/user/repos?sort=pushed&per_page=24&page=${page}`,
       {
         headers: {
           Authorization: `token ${accessToken}`,

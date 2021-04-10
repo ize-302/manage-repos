@@ -21,7 +21,7 @@ const Home = () => {
     const page = router.query.page;
 
     axios
-      .get(`/api/getRepos?accessToken=${token}?page=${page}`)
+      .get(`/api/getRepos?accessToken=${token}&page=${page}`)
       .then((response) => {
         setloading(false);
         setrepos(response.data);
@@ -40,7 +40,8 @@ const Home = () => {
           <Heading fontSize={[18, 18, 24]}>Hi {user.login},</Heading>
         </HStack>
         <Text>
-          <b>{user.total_private_repos + user.public_repos}</b> Repositories
+          <b>{loading ? "0" : user.total_private_repos + user.public_repos}</b>{" "}
+          Repositories
         </Text>
       </Flex>
 

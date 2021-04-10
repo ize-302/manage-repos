@@ -24,70 +24,75 @@ const Repos = ({ repos, loading }) => {
             speed={1.5}
           />
         ))}
-      {repos.map((repo) => (
-        <VStack
-          key={repo.id}
-          border="1px solid rgb(234, 234, 234)"
-          rounded={5}
-          height={["auto", "auto", "172px"]}
-          _hover={{ boxShadow: "lg", cursor: "pointer", border: "none" }}
-          justifyContent="space-between"
-          alignItems="flex-start"
-        >
-          <Box padding={5} height={["auto", "auto", "70%"]}>
-            <Text fontWeight="600" fontSize={18}>
-              {repo.name}
-            </Text>
-            <Tooltip
-              label={repo.description}
-              fontSize="xs"
-              background="#000"
-              rounded={4}
-              padding={2}
-            >
-              <Text fontWeight="400" fontSize={14} marginTop={3}>
-                <Text display={["none", "none", "block"]}>
-                  {repo.description && repo.description.slice(0, 90) + "..."}
-                </Text>
-                <Text display={["block", "block", "none"]}>
-                  {repo.description}
-                </Text>
+      {!loading &&
+        repos.map((repo) => (
+          <VStack
+            key={repo.id}
+            border="1px solid rgb(234, 234, 234)"
+            rounded={5}
+            height={["auto", "auto", "172px"]}
+            _hover={{ boxShadow: "lg", cursor: "pointer", border: "none" }}
+            justifyContent="space-between"
+            alignItems="flex-start"
+          >
+            <Box padding={5} height={["auto", "auto", "70%"]}>
+              <Text fontWeight="600" fontSize={18}>
+                {repo.name}
               </Text>
-            </Tooltip>
-          </Box>
-          <Box width="100%" height={["auto", "auto", "25%"]} paddingBottom={2}>
-            <Divider marginBottom={2} />
-            <HStack paddingX={3} justifyContent="space-between">
-              <>
-                {!repo.fork ? (
-                  <Button rounded={50} size="xs" _hover={{}}>
-                    source
-                  </Button>
-                ) : (
-                  <Button rounded={50} size="xs" _hover={{}}>
-                    forked
-                  </Button>
-                )}
-              </>
-              <>
-                {repo.private && (
-                  <Button rounded={50} size="xs" _hover={{}}>
-                    Private
-                  </Button>
-                )}
-              </>
-              <Link
-                href={repo.html_url}
-                fontSize={14}
-                target="_blank"
-                color="#10983D"
+              <Tooltip
+                label={repo.description}
+                fontSize="xs"
+                background="#000"
+                rounded={4}
+                padding={2}
               >
-                Open in Github
-              </Link>
-            </HStack>
-          </Box>
-        </VStack>
-      ))}
+                <Text fontWeight="400" fontSize={14} marginTop={3}>
+                  <Text display={["none", "none", "block"]}>
+                    {repo.description && repo.description.slice(0, 90) + "..."}
+                  </Text>
+                  <Text display={["block", "block", "none"]}>
+                    {repo.description}
+                  </Text>
+                </Text>
+              </Tooltip>
+            </Box>
+            <Box
+              width="100%"
+              height={["auto", "auto", "25%"]}
+              paddingBottom={2}
+            >
+              <Divider marginBottom={2} />
+              <HStack paddingX={3} justifyContent="space-between">
+                <>
+                  {!repo.fork ? (
+                    <Button rounded={50} size="xs" _hover={{}}>
+                      source
+                    </Button>
+                  ) : (
+                    <Button rounded={50} size="xs" _hover={{}}>
+                      forked
+                    </Button>
+                  )}
+                </>
+                <>
+                  {repo.private && (
+                    <Button rounded={50} size="xs" _hover={{}}>
+                      Private
+                    </Button>
+                  )}
+                </>
+                <Link
+                  href={repo.html_url}
+                  fontSize={14}
+                  target="_blank"
+                  color="#10983D"
+                >
+                  Open in Github
+                </Link>
+              </HStack>
+            </Box>
+          </VStack>
+        ))}
     </SimpleGrid>
   );
 };
