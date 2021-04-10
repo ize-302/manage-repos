@@ -7,7 +7,6 @@ import {
   Text,
   VStack,
   Tooltip,
-  Button,
   HStack,
   Link,
   Skeleton,
