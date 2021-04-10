@@ -30,9 +30,9 @@ export default function Home() {
           <VStack spacing={20}>
             <Logo width="100px" />
             <Heading
-              fontSize="160px"
+              fontSize={["60px", "60px", "90px", "160px"]}
               textAlign="center"
-              lineHeight="170px"
+              lineHeight={["70px", "70px", "100px", "170px"]}
               color="#000"
             >
               Manage repos!
