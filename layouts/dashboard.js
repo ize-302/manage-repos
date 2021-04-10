@@ -38,7 +38,7 @@ const DashboardLayout = (props) => {
       <Box display="flex" justifyContent="center" flexDir="column" minH="100vh">
         <Header />
         {/* main */}
-        <Flex flex={1} marginY={[5, 5, 10]}>
+        <Flex flex={1} marginY={10}>
           <Container maxW="6xl">{props.children}</Container>
         </Flex>
         {/* footer */}
