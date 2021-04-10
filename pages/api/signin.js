@@ -25,7 +25,7 @@ export default (req, res) => {
       }
     )
     .then((response) => {
-      res.redirect(`/repos?accessToken=${response.data.access_token}`);
+      res.redirect(`/home?accessToken=${response.data.access_token}`);
     })
     .catch((err) => {
       throw err;

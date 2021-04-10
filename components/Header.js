@@ -1,33 +1,43 @@
-import Link from "next/link";
+import React from "react";
+import {
+  Box,
+  Container,
+  Text,
+  Avatar,
+  HStack,
+  Button,
+  Tooltip,
+} from "@chakra-ui/react";
+import Logo from "./Logo";
+import { useRouter } from "next/router";
 
-const Header = () => {
+const Header = ({ userData }) => {
+  const router = useRouter();
+  const handleLogout = () => {
+    window.localStorage.removeItem("accessToken");
+    router.push("/");
+  };
   return (
-    <div className="header">
-      <Link href="/">
-        <a className="logo">NextAuth.js</a>
-      </Link>
-      {session && (
-        <a href="#" onClick={handleSignout} className="btn-signin">
-          Sign out
-        </a>
-      )}
-      {!session && (
-        <a href="#" onClick={handleSignin} className="btn-signin">
-          Sign in
-        </a>
-      )}
-      {session && (
-        <>
-          {" "}
-          <p style={{ marginBottom: "10px" }}>
-            {" "}
-            Welcome, {session.user.name ?? session.user.email}
-          </p>{" "}
-          <br />
-          <img src={session.user.image} alt="" />
-        </>
-      )}
-    </div>
+    <Box borderBottom="1px solid rgb(234, 234, 234)" paddingY={5}>
+      <Container maxW="6xl">
+        <HStack justifyContent="space-between">
+          <Logo width="100px" />
+          <HStack spacing={3}>
+            <Tooltip label={userData.login} fontSize="xs">
+              <Avatar
+                src={userData.avatar_url}
+                height="35px"
+                width="35px"
+                border="1px solid #000"
+              />
+            </Tooltip>
+            <Button rounded={50} size="sm" onClick={() => handleLogout()}>
+              Logout
+            </Button>
+          </HStack>
+        </HStack>
+      </Container>
+    </Box>
   );
 };
 

@@ -9,9 +9,9 @@ export default (req, res) => {
       },
     })
     .then((response) => {
-      res.send(response.data);
+      res.status(200).send(response.data);
     })
     .catch((err) => {
-      throw err;
+      return err;
     });
 };
