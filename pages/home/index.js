@@ -1,10 +1,15 @@
 import React from "react";
-import { Box, Heading } from "@chakra-ui/layout";
+import { Box, Heading, HStack } from "@chakra-ui/layout";
+import { UserContext } from "../../contexts/userContext";
 
 const Repos = () => {
+  const { user } = React.useContext(UserContext);
   return (
     <Box>
-      <Heading>Hello</Heading>
+      <HStack spacing={4}>
+        <Heading>👋</Heading>
+        <Heading fontSize={24}>Hi {user.login},</Heading>
+      </HStack>
     </Box>
   );
 };

@@ -10,6 +10,7 @@ export default function Home() {
   const handleSignin = () => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`;
   };
+
   return (
     <Box
       display="flex"

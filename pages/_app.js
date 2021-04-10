@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Fonts } from "../Fonts";
 import LayoutWrapper from "../layouts/layout-wrapper";
+import UserContextProvider from "../contexts/userContext";
 
 const colors = {
   brand: {
@@ -32,10 +33,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
-
-      <LayoutWrapper {...pageProps}>
-        <Component {...pageProps} />
-      </LayoutWrapper>
+      <UserContextProvider>
+        <LayoutWrapper {...pageProps}>
+          <Component {...pageProps} />
+        </LayoutWrapper>
+      </UserContextProvider>
     </ChakraProvider>
   );
 }

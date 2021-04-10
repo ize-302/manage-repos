@@ -5,10 +5,11 @@ import Footer from "../components/Footer";
 import { Box, Flex, Container } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { UserContext } from "../contexts/userContext";
 
 const DashboardLayout = (props) => {
+  const { storeUser } = React.useContext(UserContext);
   const router = useRouter();
-  const [userData, setuserData] = React.useState({});
 
   React.useEffect(function mount() {
     if (router.query.accessToken) {
@@ -24,7 +25,7 @@ const DashboardLayout = (props) => {
     }
     // user details
     axios.get(`/api/getAuthUser?accessToken=${token}`).then((response) => {
-      return setuserData(response.data);
+      storeUser(response.data);
     });
   }, []);
   return (
@@ -35,9 +36,9 @@ const DashboardLayout = (props) => {
       </Head>
 
       <Box display="flex" justifyContent="center" flexDir="column" minH="100vh">
-        <Header userData={userData} />
+        <Header />
         {/* main */}
-        <Flex flex={1} marginY={10}>
+        <Flex flex={1} marginY={[5, 5, 10]}>
           <Container maxW="6xl">{props.children}</Container>
         </Flex>
         {/* footer */}
