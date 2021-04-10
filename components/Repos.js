@@ -12,7 +12,6 @@ import {
   Skeleton,
   Tag,
 } from "@chakra-ui/react";
-import { LockIcon } from "@chakra-ui/icons";
 
 const Repos = ({ repos, loading }) => {
   return (
@@ -69,13 +68,6 @@ const Repos = ({ repos, loading }) => {
                     <Tag size="sm" colorScheme="blue" borderRadius="full">
                       forked
                     </Tag>
-                  )}
-
-                  {repo.private && (
-                    <HStack spacing={1}>
-                      <LockIcon w={3} height={3} />
-                      <Text fontSize="12">Private</Text>
-                    </HStack>
                   )}
                 </HStack>
 

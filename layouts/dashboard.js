@@ -14,14 +14,14 @@ const DashboardLayout = (props) => {
   React.useEffect(function mount() {
     if (router.query.accessToken) {
       window.localStorage.setItem("accessToken", router.query.accessToken);
-      router.push("/home");
+      window.location.href = "/home";
     }
     const token = window.localStorage.getItem(
       "accessToken",
       router.query.accessToken
     );
     if (!token) {
-      router.push("/");
+      window.location.href = "/";
     }
     // user details
     axios.get(`/api/getAuthUser?accessToken=${token}`).then((response) => {

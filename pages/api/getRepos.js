@@ -1,37 +1,15 @@
 const { default: axios } = require("axios");
 
 export default (req, res) => {
-  const { accessToken, page } = req.query;
-
+  const { accessToken } = req.query;
   axios
-    .get(`https://api.github.com/user/installations`, {
+    .get(`https://api.github.com/user/repos?sort=pushed&per_page=100`, {
       headers: {
         Authorization: `token ${accessToken}`,
-        Accept: "application/vnd.github.v3+json",
       },
     })
     .then((response) => {
-      // get manage repo's id
-      const repo = response.data.installations.find((installation) => {
-        return installation.app_slug === "manage-repos";
-      });
-
-      axios
-        .get(
-          `https://api.github.com/user/installations/${repo.id}/repositories?per_page=24&page=${page}`,
-          {
-            headers: {
-              Authorization: `token ${accessToken}`,
-              Accept: "application/vnd.github.v3+json",
-            },
-          }
-        )
-        .then((response) => {
-          res.status(200).send(response.data);
-        })
-        .catch((err) => {
-          return err;
-        });
+      res.status(200).send(response.data);
     })
     .catch((err) => {
       return err;
