@@ -32,7 +32,11 @@ const Home = () => {
     );
 
     axios
-      .get(`/api/getRepos?accessToken=${token}`)
+      .get(`https://api.github.com/user/repos?sort=pushed&per_page=100`, {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      })
       .then((response) => {
         setloading(false);
         setrepos(response.data);
