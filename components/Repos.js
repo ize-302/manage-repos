@@ -23,12 +23,35 @@ import {
   Input,
   Textarea,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { LockIcon } from "@chakra-ui/icons";
 
 const RepoCard = ({ repo }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleUpdatRepo = (repo) => {
-    console.log(repo);
+    const accessToken = window.localStorage.getItem("accessToken");
+    console.log(accessToken);
+    axios
+      .patch(
+        `https://api.github.com/repos/ize-302/drago`,
+        {
+          name: "drago",
+          description: "Landing page for Drago",
+        },
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+            Authorization: `token ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -103,6 +126,12 @@ const RepoCard = ({ repo }) => {
                 <Tag size="sm" colorScheme="blue" borderRadius="full">
                   forked
                 </Tag>
+              )}
+              {repo.private && (
+                <HStack spacing={1} alignItems="baseline">
+                  <LockIcon w="3" h="3" />
+                  <Text fontSize="12">Private</Text>
+                </HStack>
               )}
             </HStack>
 
