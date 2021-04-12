@@ -147,6 +147,21 @@ const Repos = () => {
     fetchRepos();
   }, []);
 
+  const calcPageNum = () => {
+    return Math.ceil(user.public_repos / 100);
+  };
+
+  const handlePagination = (direction) => {
+    let currentPage = router.query.page === undefined ? 1 : router.query.page; // current page
+    if (direction === "next") {
+      let nextPage = Number(currentPage) + 1;
+      window.location.href = "/home?page=" + nextPage;
+    } else {
+      let prevPage = Number(currentPage) - 1;
+      window.location.href = "/home?page=" + prevPage;
+    }
+  };
+
   const handleStarRepo = () => {
     const token = window.localStorage.getItem("accessToken");
     axios({
@@ -241,6 +256,21 @@ const Repos = () => {
             />
           ))}
       </SimpleGrid>
+      {/* pagination */}
+      <HStack marginTop={10} spacing={3} justifyContent="center">
+        <Button
+          disabled={router.query.page === undefined || router.query.page == 1}
+          onClick={() => handlePagination("previous")}
+        >
+          Previous
+        </Button>
+        <Button
+          disabled={router.query.page >= calcPageNum()}
+          onClick={() => handlePagination("next")}
+        >
+          Next
+        </Button>
+      </HStack>
       {checkIfSelected() && (
         <HStack
           spacing={5}
