@@ -13,8 +13,8 @@ import {
   PopoverArrow,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
-import { UserContext } from "../../contexts/userContext";
-import Repos from "../../components/Repos";
+import { UserContext } from "../contexts/userContext";
+import Repos from "../components/Repos";
 import axios from "axios";
 import { useRouter } from "next/router";
 
