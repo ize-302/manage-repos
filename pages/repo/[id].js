@@ -14,7 +14,6 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "../../contexts/userContext";
-import Link from "next/link";
 
 const Repo = () => {
   const [repoName, setrepoName] = React.useState("");

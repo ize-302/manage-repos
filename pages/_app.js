@@ -3,7 +3,6 @@ import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import { Fonts } from "../Fonts";
 import LayoutWrapper from "../layouts/layout-wrapper";
 import UserContextProvider from "../contexts/userContext";
-import ModeContextProvider from "../contexts/modeontext";
 
 const colors = {
   brand: {
@@ -35,13 +34,11 @@ function MyApp({ Component, pageProps }) {
     <Box background="white">
       <ChakraProvider theme={theme}>
         <Fonts />
-        <ModeContextProvider>
-          <UserContextProvider>
-            <LayoutWrapper {...pageProps}>
-              <Component {...pageProps} />
-            </LayoutWrapper>
-          </UserContextProvider>
-        </ModeContextProvider>
+        <UserContextProvider>
+          <LayoutWrapper {...pageProps}>
+            <Component {...pageProps} />
+          </LayoutWrapper>
+        </UserContextProvider>
       </ChakraProvider>
     </Box>
   );
