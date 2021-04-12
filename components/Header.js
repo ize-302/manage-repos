@@ -6,6 +6,7 @@ import {
   HStack,
   Button,
   Tooltip,
+  Link,
 } from "@chakra-ui/react";
 import Logo from "./Logo";
 import { UserContext } from "../contexts/userContext";
@@ -17,9 +18,19 @@ const Header = () => {
     <Box borderBottom="1px solid rgb(234, 234, 234)" paddingY={5}>
       <Container maxW="6xl">
         <HStack justifyContent="space-between">
-          <Logo width="100px" />
+          <Box
+            cursor="pointer"
+            onClick={() => (window.location.href = "/home")}
+          >
+            <Logo width="100px" />
+          </Box>
           <HStack spacing={3}>
-            <Tooltip label={user.login} fontSize="xs">
+            <Tooltip
+              label={
+                "followers " + user.followers + ", following " + user.following
+              }
+              fontSize="xs"
+            >
               <Avatar
                 src={user.avatar_url}
                 height="35px"

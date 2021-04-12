@@ -8,7 +8,7 @@ import Logo from "../components/Logo";
 
 export default function Home() {
   const handleSignin = () => {
-    window.location.href = `https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`;
+    window.location.href = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}&scope=repo`;
   };
 
   return (

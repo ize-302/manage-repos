@@ -26,12 +26,12 @@ const Footer = () => {
           </Text>
         </Box>
         <Box>
-          <FormControl display="flex" alignItems="center">
+          {/* <FormControl display="flex" alignItems="center">
             <FormLabel htmlFor="toggle-mode" mb="0">
               {isDark ? "Dark" : "Light"}
             </FormLabel>
             <Switch onChange={() => toggleMode()} id="toggle-mode" />
-          </FormControl>
+          </FormControl> */}
         </Box>
       </Container>
     </Box>

@@ -11,23 +11,35 @@ const DashboardLayout = (props) => {
   const { storeUser } = React.useContext(UserContext);
   const router = useRouter();
 
-  React.useEffect(function mount() {
-    if (router.query.accessToken) {
-      window.localStorage.setItem("accessToken", router.query.accessToken);
-      window.location.href = "/home";
-    }
-    const token = window.localStorage.getItem(
-      "accessToken",
-      router.query.accessToken
-    );
-    if (!token) {
-      window.location.href = "/";
-    }
-    // user details
-    axios.get(`/api/getAuthUser?accessToken=${token}`).then((response) => {
-      storeUser(response.data);
-    });
-  }, []);
+  React.useEffect(
+    function mount() {
+      if (router.query.accessToken) {
+        window.localStorage.setItem("accessToken", router.query.accessToken);
+        window.location.replace("/home");
+      }
+      const token = window.localStorage.getItem(
+        "accessToken",
+        router.query.accessToken
+      );
+      if (!token) {
+        window.location.href = "/";
+      }
+      // user details
+      axios
+        .get("https://api.github.com/user", {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        })
+        .then((response) => {
+          storeUser(response.data);
+        })
+        .catch((err) => {
+          return err;
+        });
+    },
+    [router]
+  );
   return (
     <>
       <Head>
