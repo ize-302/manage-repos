@@ -1,22 +1,10 @@
 import React from "react";
-import {
-  Button,
-  Flex,
-  Text,
-  Switch,
-  FormControl,
-  FormLabel,
-  Box,
-  Container,
-} from "@chakra-ui/react";
-import { ModeContext } from "../contexts/modeontext";
+import { Text, Box, Container } from "@chakra-ui/react";
 
 const Footer = () => {
-  const { isDark, toggleMode } = React.useContext(ModeContext);
-
   return (
     <Box borderTop="1px solid rgb(234, 234, 234)" paddingY={5}>
-      <Container maxW="6xl" display="flex" justifyContent="space-between">
+      <Container maxW="6xl" display="flex" justifyContent="center">
         <Box>
           <Text>
             Source code on{" "}
@@ -24,14 +12,6 @@ const Footer = () => {
               <b>Github</b>
             </a>
           </Text>
-        </Box>
-        <Box>
-          {/* <FormControl display="flex" alignItems="center">
-            <FormLabel htmlFor="toggle-mode" mb="0">
-              {isDark ? "Dark" : "Light"}
-            </FormLabel>
-            <Switch onChange={() => toggleMode()} id="toggle-mode" />
-          </FormControl> */}
         </Box>
       </Container>
     </Box>

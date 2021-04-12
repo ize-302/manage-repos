@@ -6,7 +6,6 @@ import {
   HStack,
   Button,
   Tooltip,
-  Link,
 } from "@chakra-ui/react";
 import Logo from "./Logo";
 import { UserContext } from "../contexts/userContext";

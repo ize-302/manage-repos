@@ -20,8 +20,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Circle,
-  Checkbox,
-  Container,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LockIcon, CheckCircleIcon } from "@chakra-ui/icons";
@@ -108,19 +107,17 @@ const RepoCard = ({ repo, onClick }) => {
 };
 
 const Repos = () => {
+  const { user } = React.useContext(UserContext);
+  const router = useRouter();
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [repos, setrepos] = React.useState([]);
   const [loading, setloading] = React.useState(false);
   const [enteredGithubUsername, setenteredGithubUsername] = React.useState("");
-  const [starRepo, setstarRepo] = React.useState(true);
-  const router = useRouter();
-  const { user } = React.useContext(UserContext);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchRepos = () => {
     setloading(true);
     const token = window.localStorage.getItem("accessToken");
-
     axios
       .get(
         `https://api.github.com/user/repos?sort=pushed&per_page=100&page=${router.query.page}`,
@@ -143,43 +140,6 @@ const Repos = () => {
       });
   };
 
-  React.useEffect(() => {
-    fetchRepos();
-  }, []);
-
-  const calcPageNum = () => {
-    return Math.ceil(user.public_repos / 100);
-  };
-
-  const handlePagination = (direction) => {
-    let currentPage = router.query.page === undefined ? 1 : router.query.page; // current page
-    if (direction === "next") {
-      let nextPage = Number(currentPage) + 1;
-      window.location.href = "/home?page=" + nextPage;
-    } else {
-      let prevPage = Number(currentPage) - 1;
-      window.location.href = "/home?page=" + prevPage;
-    }
-  };
-
-  const handleStarRepo = () => {
-    const token = window.localStorage.getItem("accessToken");
-    axios({
-      method: "put",
-      url: "https://api.github.com/user/starred/ize-302/sample",
-      data: {},
-      headers: {
-        Authorization: "token " + token,
-      },
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const handleDeleteRepos = () => {
     setloading(true);
     const token = window.localStorage.getItem("accessToken");
@@ -187,10 +147,7 @@ const Repos = () => {
     const reposToDelete = repos.filter((repo) => {
       return repo.checked === true;
     });
-    // if (starRepo) {
-    //   handleStarRepo();
-    //   return;
-    // }
+
     reposToDelete.forEach((repoToDelete) => {
       axios
         .delete(`https://api.github.com/repos/${repoToDelete.full_name}`, {
@@ -199,7 +156,14 @@ const Repos = () => {
           },
         })
         .then((response) => {
-          router.push("/done?ref=delete-repos");
+          fetchRepos();
+          toast({
+            title: "Repo(s) has been deleted",
+            description: "You may have to reload the page",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
         })
         .catch((err) => {
           setloading(false);
@@ -208,6 +172,7 @@ const Repos = () => {
     });
   };
 
+  // check if any repo has been selected
   const checkIfSelected = () => {
     return repos.find((repo) => {
       return repo.checked === true;
@@ -235,6 +200,25 @@ const Repos = () => {
     });
     return count;
   };
+
+  const calcPageNum = () => {
+    return Math.ceil(user.public_repos / 100);
+  };
+
+  const handlePagination = (direction) => {
+    let currentPage = router.query.page === undefined ? 1 : router.query.page; // current page
+    if (direction === "next") {
+      let nextPage = Number(currentPage) + 1;
+      window.location.href = "/home?page=" + nextPage;
+    } else {
+      let prevPage = Number(currentPage) - 1;
+      window.location.href = "/home?page=" + prevPage;
+    }
+  };
+
+  React.useEffect(() => {
+    fetchRepos();
+  }, []);
 
   return (
     <>
@@ -325,15 +309,6 @@ const Repos = () => {
                   Delete repo(s)
                 </Button>
               </ModalFooter>
-              <HStack justifyContent="center" marginBottom={5}>
-                <Checkbox
-                  defaultIsChecked
-                  value={starRepo}
-                  onChange={() => setstarRepo(!starRepo)}
-                >
-                  Star repository on GitHub
-                </Checkbox>
-              </HStack>
             </ModalContent>
           </Modal>
         </HStack>
