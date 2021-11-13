@@ -11,9 +11,9 @@ import {
   Skeleton,
   Heading,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "../../contexts/userContext";
+import { fetchRepoService, updateRepoService } from "../../services";
 
 const Repo = () => {
   const [repoName, setrepoName] = React.useState("");
@@ -27,23 +27,15 @@ const Repo = () => {
   const toast = useToast();
 
   const handleUpdateRepo = () => {
-    const token = window.localStorage.getItem("accessToken");
     setsubmitting(true);
-    axios
-      .patch(
-        `https://api.github.com/repos/${user.login}/${router.query.id}`,
-        {
-          name: repoName,
-          description: description,
-          homepage: homepage,
-        },
-        {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        }
-      )
-      .then((response) => {
+    updateRepoService(
+      user.login,
+      router.query.id,
+      repoName,
+      description,
+      homepage
+    )
+      .then(() => {
         setsubmitting(false);
         toast({
           title: "Repo has been updated",
@@ -64,14 +56,8 @@ const Repo = () => {
   };
 
   React.useEffect(() => {
-    const token = window.localStorage.getItem("accessToken");
     setloading(true);
-    axios
-      .get(`https://api.github.com/repos/${user.login}/${router.query.id}`, {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
+    fetchRepoService(user.login, router.query.id)
       .then((response) => {
         setloading(false);
         const { name, description, homepage, html_url } = response.data;
