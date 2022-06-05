@@ -15,40 +15,25 @@ import {
 import { InfoIcon } from "@chakra-ui/icons";
 import { UserContext } from "../contexts/userContext";
 import Repos from "../components/Repos";
-import axios from "axios";
-import { useRouter } from "next/router";
+import { installations } from "./calls";
 
 const Home = () => {
   const { user } = React.useContext(UserContext);
-  const router = useRouter();
 
   const [showNotification, setshowNotification] = React.useState(false);
 
   React.useEffect(function mount() {
-    const token = window.localStorage.getItem(
-      "accessToken",
-      router.query.accessToken
-    );
-
-    axios
-      .get("https://api.github.com/user/installations", {
-        headers: {
-          Authorization: `token ${token}`,
-          Accept: "application/vnd.github.v3+json",
-        },
-      })
-      .then((response) => {
-        let installation = response.data.installations.find((installation) => {
-          return installation.app_slug === "manage-repos";
-        });
-
-        if (!installation) {
-          setshowNotification(true);
-        }
-      })
-      .catch((err) => {
-        throw err;
+    installations().then((data) => {
+      let installation = data.installations.find((installation) => {
+        return installation.app_slug === "manage-repos";
       });
+
+      if (!installation) {
+        setshowNotification(true);
+      }
+    }).catch((err) => {
+      throw err;
+    });
   }, []);
 
   return (
@@ -60,13 +45,12 @@ const Home = () => {
         </HStack>
         {!showNotification && (
           <Text>
-            <b>{user.public_repos}</b> Public Repositories
+            {user.public_repos} <b>Public</b> Repositories
           </Text>
         )}
       </Flex>
-      {/* repos */}
 
-      {showNotification ? (
+      {showNotification && (
         <HStack
           background="orange.100"
           rounded={3}
@@ -76,7 +60,7 @@ const Home = () => {
           marginBottom={10}
           justifyContent="center"
         >
-          <Text>Complete setup</Text>
+          <Text>By Default, ManageRepo only have access to your public repositories. To allow access to private repositories, </Text>
           <Link
             color="green"
             fontWeight="600"
@@ -91,14 +75,13 @@ const Home = () => {
             <PopoverContent _focus={{ outline: "none" }}>
               <PopoverArrow />
               <PopoverBody fontSize="12">
-                You will be asked to allow Manage-repo access your repositories
+                You will be asked to allow ManageRepo access your private repositories
               </PopoverBody>
             </PopoverContent>
           </Popover>
         </HStack>
-      ) : (
-        <Repos />
       )}
+      <Repos />
     </Box>
   );
 };

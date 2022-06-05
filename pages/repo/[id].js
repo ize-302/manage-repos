@@ -11,9 +11,9 @@ import {
   Skeleton,
   Heading,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { UserContext } from "../../contexts/userContext";
+import { getRepo, updateRepo } from "../calls";
 
 const Repo = () => {
   const [repoName, setrepoName] = React.useState("");
@@ -27,31 +27,16 @@ const Repo = () => {
   const toast = useToast();
 
   const handleUpdateRepo = () => {
-    const token = window.localStorage.getItem("accessToken");
     setsubmitting(true);
-    axios
-      .patch(
-        `https://api.github.com/repos/${user.login}/${router.query.id}`,
-        {
-          name: repoName,
-          description: description,
-          homepage: homepage,
-        },
-        {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        }
-      )
-      .then((response) => {
-        setsubmitting(false);
-        toast({
-          title: "Repo has been updated",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      })
+    updateRepo({ login: user.login, id: router.query.id, name: repoName, description: description, homepage }).then((data) => {
+      setsubmitting(false);
+      toast({
+        title: "Repo has been updated",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    })
       .catch((err) => {
         setsubmitting(false);
         toast({
@@ -64,22 +49,15 @@ const Repo = () => {
   };
 
   React.useEffect(() => {
-    const token = window.localStorage.getItem("accessToken");
     setloading(true);
-    axios
-      .get(`https://api.github.com/repos/${user.login}/${router.query.id}`, {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
-      .then((response) => {
-        setloading(false);
-        const { name, description, homepage, html_url } = response.data;
-        setrepoName(name);
-        sethomepage(homepage);
-        setdescription(description);
-        setgithubUrl(html_url);
-      })
+    getRepo({ login: user.login, id: router.query.id }).then((data) => {
+      setloading(false);
+      const { name, description, homepage, html_url } = data;
+      setrepoName(name);
+      sethomepage(homepage);
+      setdescription(description);
+      setgithubUrl(html_url);
+    })
       .catch((err) => {
         console.log(err);
       });

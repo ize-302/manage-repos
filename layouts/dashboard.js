@@ -4,8 +4,8 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Box, Flex, Container } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import { UserContext } from "../contexts/userContext";
+import { user } from "../pages/calls";
 
 const DashboardLayout = (props) => {
   const { storeUser } = React.useContext(UserContext);
@@ -17,23 +17,14 @@ const DashboardLayout = (props) => {
         window.localStorage.setItem("accessToken", router.query.accessToken);
         window.location.replace("/home");
       }
-      const token = window.localStorage.getItem(
-        "accessToken",
-        router.query.accessToken
-      );
+      const token = window.localStorage.getItem("accessToken",);
       if (!token) {
         window.location.href = "/";
       }
       // user details
-      axios
-        .get("https://api.github.com/user", {
-          headers: {
-            Authorization: `token ${token}`,
-          },
-        })
-        .then((response) => {
-          storeUser(response.data);
-        })
+      user().then((data) => {
+        storeUser(data);
+      })
         .catch((err) => {
           return err;
         });

@@ -1,3 +1,4 @@
+import React from 'react';
 import "../styles/globals.css";
 import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import { Fonts } from "../Fonts";
