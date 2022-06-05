@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { Box, Flex, Container } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { UserContext } from "../contexts/userContext";
-import { user } from "../pages/calls";
+import { user } from "../calls";
 
 const DashboardLayout = (props) => {
   const { storeUser } = React.useContext(UserContext);

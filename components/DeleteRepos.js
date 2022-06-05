@@ -17,7 +17,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { UserContext } from "../contexts/userContext";
-import { deleteRepo } from "../pages/calls";
+import { deleteRepo } from "../calls";
 
 const DeleteRepos = ({ repos, fetchRepos }) => {
   const { user } = React.useContext(UserContext);

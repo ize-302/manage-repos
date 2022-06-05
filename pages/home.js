@@ -15,7 +15,7 @@ import {
 import { InfoIcon } from "@chakra-ui/icons";
 import { UserContext } from "../contexts/userContext";
 import Repos from "../components/Repos";
-import { installations } from "./calls";
+import { installations } from "../calls";
 
 const Home = () => {
   const { user } = React.useContext(UserContext);

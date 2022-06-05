@@ -1,4 +1,4 @@
-import { login } from "../calls";
+import { login } from "../../calls";
 
 export default (req, res) => {
   const { code } = req.query;

@@ -5,7 +5,7 @@ import {
 import Card from './Card'
 import DeleteRepos from "./DeleteRepos";
 import Pagination from "./Pagination";
-import { fetchRepos } from '../pages/calls'
+import { fetchRepos } from '../calls'
 
 const Repos = () => {
   const [repos, setrepos] = React.useState([]);

@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { UserContext } from "../../contexts/userContext";
-import { getRepo, updateRepo } from "../calls";
+import { getRepo, updateRepo } from "../../calls";
 
 const Repo = () => {
   const [repoName, setrepoName] = React.useState("");
